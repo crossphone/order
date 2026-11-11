@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { --ink:#171923; --muted:#687080; --line:#e4e7ec; --accent:#171923; --bg:#f4f5f7; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:Arial,"Noto Sans Bengali",sans-serif; }
+    .wrap { max-width:680px; margin:28px auto; padding:0 14px 30px; }
+    .card { background:#fff; border:1px solid var(--line); border-radius:20px; padding:24px; box-shadow:0 8px 30px rgba(20,25,35,.05); }
+    header { text-align:center; padding:8px 0 20px; }
+    .brand { font-size:25px; font-weight:800; letter-spacing:1px; }
+    .tag { color:var(--muted); font-size:13px; margin-top:7px; }
+    h1 { font-size:21px; margin:8px 0 5px; }
+    .intro { color:var(--muted); font-size:14px; line-height:1.6; margin:0; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .field { margin:14px 0; }
+    label { display:block; font-size:14px; font-weight:700; margin-bottom:7px; }
+    input, textarea, select { width:100%; padding:13px 12px; border:1px solid #d9dde5; border-radius:10px; font:inherit; font-size:15px; background:#fff; outline:none; }
+    input:focus, textarea:focus, select:focus { border-color:#555d6b; box-shadow:0 0 0 3px rgba(30,40,60,.08); }
+    textarea { min-height:92px; resize:vertical; }
+    .required { color:#c0392b; }
+    .fee { background:#f7f7f8; border:1px solid var(--line); border-radius:12px; padding:15px; margin:20px 0; }
+    .fee strong { font-size:18px; }
+    .fee small { display:block; color:var(--muted); margin-top:5px; line-height:1.5; }
+    .consent { display:flex; gap:9px; align-items:flex-start; color:#4f5663; font-size:13px; line-height:1.5; margin:18px 0; }
+    .consent input { width:auto; margin-top:2px; }
+    button, .paylink { display:block; width:100%; border:0; border-radius:11px; padding:15px; background:var(--accent); color:#fff; font-size:16px; font-weight:700; text-align:center; text-decoration:none; cursor:pointer; }
+    button:disabled { opacity:.55; cursor:wait; }
+    #status { display:none; margin-top:15px; padding:13px; border-radius:10px; font-size:14px; line-height:1.5; }
+    #status.error { display:block; background:#fff0ef; color:#a12a22; }
+    #status.success { display:block; background:#effaf2; color:#176b35; }
+    #paymentArea { display:none; margin-top:15px; }
+    .fine { color:var(--muted); font-size:12px; line-height:1.55; margin-top:16px; }
+    @media(max-width:560px) { .grid { grid-template-columns:1fr; gap:0; } .card { padding:19px; } .wrap { margin:12px auto; } }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <header>
+        <div class="brand">BORDER CROSS PHONE</div>
+        <div class="tag">Imported Smartphones • Cash on Delivery</div>
+        <h1>অর্ডার রেজিস্ট্রেশন ফর্ম</h1>
+        <p class="intro">সঠিক তথ্য দিয়ে ফর্মটি পূরণ করুন। অর্ডার সম্পর্কে প্রয়োজনে আপনার সঙ্গে যোগাযোগ করা হবে।</p>
+      </header>
+
+      <form id="orderForm">
+        <div class="field">
+          <label>সম্পূর্ণ নাম <span class="required">*</span></label>
+          <input name="fullName" autocomplete="name" required maxlength="100" placeholder="আপনার নাম">
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>মোবাইল নম্বর <span class="required">*</span></label>
+            <input name="phone" type="tel" autocomplete="tel" required maxlength="20" placeholder="01XXXXXXXXX">
+          </div>
+          <div class="field">
+            <label>বিকল্প নম্বর</label>
+            <input name="altPhone" type="tel" maxlength="20" placeholder="ঐচ্ছিক">
+          </div>
+        </div>
+        <div class="field">
+          <label>কোন ফোনটি নিতে চান? <span class="required">*</span></label>
+          <input name="model" required maxlength="120" placeholder="ফোনের মডেল লিখুন">
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>RAM / Storage <span class="required">*</span></label>
+            <input name="ramRom" required maxlength="60" placeholder="যেমন: 8GB / 256GB">
+          </div>
+          <div class="field">
+            <label>পছন্দের কালার <span class="required">*</span></label>
+            <input name="color" required maxlength="60" placeholder="কালার লিখুন">
+          </div>
+        </div>
+        <div class="grid">
+          <div class="field">
+            <label>বিভাগ <span class="required">*</span></label>
+            <input name="division" required maxlength="80" placeholder="বিভাগ">
+          </div>
+          <div class="field">
+            <label>জেলা <span class="required">*</span></label>
+            <input name="district" required maxlength="80" placeholder="জেলা">
+          </div>
+        </div>
+        <div class="field">
+          <label>থানা / উপজেলা <span class="required">*</span></label>
+          <input name="thana" required maxlength="100" placeholder="থানা বা উপজেলা">
+        </div>
+        <div class="field">
+          <label>সম্পূর্ণ ডেলিভারি ঠিকানা <span class="required">*</span></label>
+          <textarea name="address" required maxlength="500" placeholder="বাসা/রোড, এলাকা, পরিচিত স্থানসহ ঠিকানা লিখুন"></textarea>
+        </div>
+
+        <div class="fee">
+          <strong>রেজিস্ট্রেশন ফি: ৳২০</strong>
+          <small>পেমেন্টের আগে ফি, মার্চেন্টের নাম এবং পেমেন্টের শর্ত ভালোভাবে যাচাই করুন। পণ্য মূল্য Cash on Delivery-এর শর্ত অনুযায়ী ডেলিভারির সময় পরিশোধযোগ্য।</small>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" id="agree" required>
+          <span>আমি নিশ্চিত করছি যে দেওয়া তথ্য সঠিক এবং অর্ডার সম্পর্কে যোগাযোগের জন্য সম্মতি দিচ্ছি।</span>
+        </label>
+
+        <button id="submitBtn" type="submit">তথ্য জমা দিন</button>
+        <div id="status" role="status" aria-live="polite"></div>
+        <div id="paymentArea"></div>
+      </form>
+
+      <p class="fine">আপনার তথ্য শুধু অর্ডার ব্যবস্থাপনা ও ডেলিভারি সংক্রান্ত যোগাযোগের জন্য ব্যবহার করুন। অপ্রয়োজনীয় বা সংবেদনশীল তথ্য দেবেন না।</p>
+    </section>
+  </main>
+
+  <script>
+    const form = document.getElementById('orderForm');
+    const button = document.getElementById('submitBtn');
+    const statusBox = document.getElementById('status');
+    const paymentArea = document.getElementById('paymentArea');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      button.disabled = true;
+      button.textContent = 'জমা হচ্ছে...';
+      statusBox.className = '';
+      statusBox.style.display = 'none';
+      paymentArea.style.display = 'none';
+      paymentArea.innerHTML = '';
+
+      // Open a tab during the user's click so a later payment redirect is less likely to be blocked.
+      const paymentTab = window.open('about:blank', '_blank');
+
+      google.script.run
+        .withSuccessHandler(function(result) {
+          statusBox.className = 'success';
+          statusBox.textContent = 'আপনার তথ্য সফলভাবে জমা হয়েছে। Order ID: ' + result.orderId;
+          if (result.paymentUrl) {
+            if (paymentTab) {
+              paymentTab.location.href = result.paymentUrl;
+              statusBox.textContent += ' পেমেন্ট পেজ নতুন ট্যাবে খোলা হয়েছে।';
+            } else {
+              paymentArea.style.display = 'block';
+              paymentArea.innerHTML = '<a class="paylink" target="_blank" rel="noopener" href="' +
+                result.paymentUrl.replace(/&/g, '&amp;').replace(/"/g, '&quot;') +
+                '">২০ টাকা পেমেন্ট করুন</a>';
+              statusBox.textContent += ' পেমেন্ট পেজ খুলতে নিচের বাটনে চাপ দিন।';
+            }
+          } else {
+            if (paymentTab) paymentTab.close();
+            statusBox.textContent += ' পেমেন্ট লিংক এখনো যুক্ত করা হয়নি। পরে লিংক যুক্ত হলে পেমেন্ট করা যাবে।';
+          }
+          form.reset();
+          button.disabled = false;
+          button.textContent = 'তথ্য জমা দিন';
+        })
+        .withFailureHandler(function(error) {
+          if (paymentTab) paymentTab.close();
+          statusBox.className = 'error';
+          statusBox.textContent = error && error.message ? error.message : 'দুঃখিত, জমা দেওয়া যায়নি। আবার চেষ্টা করুন।';
+          button.disabled = false;
+          button.textContent = 'আবার চেষ্টা করুন';
+        })
+        .submitOrder(data);
+    });
+  </script>
+</body>
+</html>
